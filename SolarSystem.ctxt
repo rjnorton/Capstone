@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=numPlanets\ screenWidth\ screenHeight
+comment0.target=SolarSystem(int,\ int,\ int)
+comment1.params=
+comment1.target=java.util.ArrayList\ getPlanets()
+numComments=2
