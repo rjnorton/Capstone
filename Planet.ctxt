@@ -18,5 +18,5 @@ comment7.target=Vector2D\ getVelocity()
 comment8.params=newVelocity
 comment8.target=void\ setVelocity(Vector2D)
 comment9.params=
-comment9.target=java.awt.geom.Ellipse2D.Float\ getCircle()
+comment9.target=java.awt.geom.Ellipse2D.Double\ getCircle()
 numComments=10

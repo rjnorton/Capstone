@@ -23,4 +23,33 @@ public class SolarSystem
     {
         return system;
     }
+    
+    public void update()
+    {
+        for(int i = 0; i < system.size(); i++)
+        {
+            Vector2D acceleration = getAccel(system.get(i), i);
+            
+        }
+    }
+    
+    public Vector2D getAccel(Planet p, int ind)
+    {
+        double totalXForce = 0;
+        double totalYForce = 0;
+        for(int i = 0; i < system.size(); i++)
+        {
+            if(!(i == ind))
+            {
+                Planet p2 = system.get(i);
+                //The planet can be on either side, force needs to be negative in some cases
+                double xDist = Math.abs(p.getCenter().x - p2.getCenter().x);
+                double yDist = Math.abs(p.getCenter().y - p2.getCenter().y);
+                double xForce = (p.getMass() * p2.getMass())/(Math.pow(xDist,2));
+                double yForce = (p.getMass() * p2.getMass())/(Math.pow(yDist,2));
+                totalXForce += xForce;
+                totalYForce += yForce;
+            }
+        }
+    }
 }

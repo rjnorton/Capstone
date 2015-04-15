@@ -6,7 +6,7 @@ public class Planet
     private int radius;
     private boolean canMove;
     private Vector2D velocity;
-    private Ellipse2D.Float planet;
+    private Ellipse2D.Double planet;
     
     public Planet(int screenHeight, int screenWidth, int minVel, int maxVel, boolean move)
     {
@@ -17,9 +17,9 @@ public class Planet
         if(canMove)
         {
             //this has to be better... based on location relative to sun
-            velocity.x = (int) (Math.random()*maxVel);
-            velocity.y = (int) (Math.random()*maxVel);
-            if(velocity.x < minVel){velocity.x = minVel;}//Math.abs these because it could be going negative?
+            velocity.x = Math.random()*maxVel;
+            velocity.y = Math.random()*maxVel;
+            if(velocity.x < minVel){velocity.x = minVel;}//these could be going negative?
             if(velocity.y < minVel){velocity.y = minVel;}
         }
         else
@@ -31,7 +31,7 @@ public class Planet
         
         int startX = (int) (Math.random() * (screenWidth - 30));
         int startY = (int) (Math.random() * (screenHeight - 30));
-        planet = new Ellipse2D.Float(startX, startY, radius*2, radius*2);
+        planet = new Ellipse2D.Double(startX, startY, radius*2, radius*2);
     }
     
     public int getMass()
@@ -57,8 +57,8 @@ public class Planet
     public Vector2D getCenter()
     {
         Vector2D center = new Vector2D();
-        center.x = (int) (planet.getCenterX());
-        center.y = (int) (planet.getCenterY());
+        center.x = planet.getCenterX();
+        center.y = planet.getCenterY();
         return center;
     }
     
@@ -77,7 +77,7 @@ public class Planet
         if(canMove){velocity = newVelocity;}
     }
     
-    public Ellipse2D.Float getCircle()
+    public Ellipse2D.Double getCircle()
     {
         return planet;
     }
