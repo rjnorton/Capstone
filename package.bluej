@@ -24,13 +24,8 @@ objectbench.height=76
 objectbench.width=963
 package.editor.height=400
 package.editor.width=865
-<<<<<<< HEAD
 package.editor.x=479
 package.editor.y=220
-=======
-package.editor.x=910
-package.editor.y=218
->>>>>>> origin/master
 package.numDependencies=7
 package.numTargets=6
 package.showExtends=true
@@ -90,13 +85,8 @@ target4.x=30
 target4.y=320
 target5.editor.height=700
 target5.editor.width=987
-<<<<<<< HEAD
 target5.editor.x=567
 target5.editor.y=300
-=======
-target5.editor.x=621
-target5.editor.y=269
->>>>>>> origin/master
 target5.height=50
 target5.name=SolarSystem
 target5.naviview.expanded=false
@@ -108,13 +98,8 @@ target5.x=130
 target5.y=50
 target6.editor.height=700
 target6.editor.width=900
-<<<<<<< HEAD
 target6.editor.x=421
 target6.editor.y=212
-=======
-target6.editor.x=427
-target6.editor.y=339
->>>>>>> origin/master
 target6.height=50
 target6.name=Planet
 target6.naviview.expanded=false
