@@ -8,11 +8,15 @@ public class Planet
     private Vector2D velocity;
     private Ellipse2D.Double planet;
     
-    public Planet(int screenHeight, int screenWidth, int minVel, int maxVel, boolean move)
+    public Planet(int screenHeight, int screenWidth, double minVel, double maxVel, boolean move)
     {
         radius = 5;
-        mass = 100;
+        mass = 1;
         canMove = move;
+        
+        int startX = (int) (Math.random() * (screenWidth - 30));
+        int startY = (int) (Math.random() * (screenHeight - 30));
+        
         velocity = new Vector2D();
         if(canMove)
         {
@@ -21,6 +25,20 @@ public class Planet
             velocity.y = Math.random()*maxVel;
             if(velocity.x < minVel){velocity.x = minVel;}//these could be going negative?
             if(velocity.y < minVel){velocity.y = minVel;}
+            
+            if(startX > screenWidth/2 && startY > screenHeight/2)
+            {
+                velocity.x = -1 * velocity.x;
+            }
+            else if(startX < screenWidth/2 && startY < screenHeight/2)
+            {
+                velocity.y = -1 * velocity.y;
+            }
+            else if(startX < screenWidth/2 && startY > screenHeight/2)
+            {
+                velocity.x = -1 * velocity.x;
+                velocity.y = -1 * velocity.y;
+            }
         }
         else
         {
@@ -28,9 +46,6 @@ public class Planet
             velocity.y = 0;
         }
         
-        
-        int startX = (int) (Math.random() * (screenWidth - 30));
-        int startY = (int) (Math.random() * (screenHeight - 30));
         planet = new Ellipse2D.Double(startX, startY, radius*2, radius*2);
     }
     
