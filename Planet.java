@@ -47,10 +47,6 @@ public class Planet
         //}
         
         
-<<<<<<< HEAD
-=======
-        
->>>>>>> origin/master
         planet = new Ellipse2D.Double(startX, startY, radius*2, radius*2);
     }
     
