@@ -11,8 +11,12 @@ public class Planet
     public Planet(int screenHeight, int screenWidth, int minVel, int maxVel, boolean move)
     {
         radius = 5;
-        mass = 100;
+        mass = 1;
         canMove = move;
+        
+        int startX = (int) (Math.random() * (screenWidth - 30));
+        int startY = (int) (Math.random() * (screenHeight - 30));
+        
         velocity = new Vector2D();
         if(canMove)
         {
@@ -22,15 +26,14 @@ public class Planet
             if(velocity.x < minVel){velocity.x = minVel;}//these could be going negative?
             if(velocity.y < minVel){velocity.y = minVel;}
         }
-        else
-        {
+        //else
+        //{
             velocity.x = 0;
             velocity.y = 0;
-        }
+        //}
         
         
-        int startX = (int) (Math.random() * (screenWidth - 30));
-        int startY = (int) (Math.random() * (screenHeight - 30));
+        
         planet = new Ellipse2D.Double(startX, startY, radius*2, radius*2);
     }
     
