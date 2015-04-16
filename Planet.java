@@ -40,12 +40,17 @@ public class Planet
                 velocity.y = -1 * velocity.y;
             }
         }
-        else
-        {
+        //else
+        //{
             velocity.x = 0;
             velocity.y = 0;
-        }
+        //}
         
+        
+<<<<<<< HEAD
+=======
+        
+>>>>>>> origin/master
         planet = new Ellipse2D.Double(startX, startY, radius*2, radius*2);
     }
     

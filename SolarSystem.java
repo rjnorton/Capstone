@@ -9,13 +9,17 @@ public class SolarSystem
         system = new ArrayList<Planet>();
         Planet sun = new Planet(screenHeight, screenWidth, 0, 0, false); //the sun
         sun.setCenter(new Vector2D(screenWidth/2,screenHeight/2));
-        sun.setMass(4000);
+        sun.setMass(400);
         system.add(sun);
         
         for(int i = 0; i < numPlanets; i++)
         {
             //add private final constant for min and max velocities
+<<<<<<< HEAD
             system.add(new Planet(screenHeight, screenWidth, 1, 2, true));
+=======
+            system.add(new Planet(screenHeight, screenWidth, 2, 3, true));
+>>>>>>> origin/master
         }
     }
     
@@ -36,10 +40,17 @@ public class SolarSystem
             Vector2D oldCenter = p.getCenter();
             Vector2D newCenter = new Vector2D(oldCenter.x + newVel.x, oldCenter.y + newVel.y);
             p.setCenter(newCenter);
+<<<<<<< HEAD
             //if(i%2 == 1)
             //{
             //    System.out.println("X: " + newVel.x + " Y: " + newVel.y);
             //}
+=======
+            if(i%2 == 1)
+            {
+                System.out.println("X: " + newVel.x + " Y: " + newVel.y);
+            }
+>>>>>>> origin/master
         }
     }
     
@@ -58,21 +69,49 @@ public class SolarSystem
                 double xDist = p.getCenter().x - p2.getCenter().x;
                 double yDist = p.getCenter().y - p2.getCenter().y;
                 double totalForce = (p.getMass() * p2.getMass())/(Math.pow(Math.hypot(xDist,yDist),2));
+<<<<<<< HEAD
                 double angle = Math.atan2(yDist, xDist);
                 double xForce = totalForce * Math.cos(angle);
                 double yForce = totalForce * Math.sin(angle);
                 totalXForce -= xForce;
                 totalYForce -= yForce;
+=======
+                //use atan here!!!
+                if(xDist > 0)
+                {
+                    totalXForce -= xForce;
+                }
+                else
+                {
+                    totalXForce += xForce;
+                }
+                
+                if(yDist > 0)
+                {
+                    totalYForce -= yForce;
+                }
+                else
+                {
+                    totalYForce += yForce;
+                }
+>>>>>>> origin/master
             }
         }
         
         double xAccel = totalXForce/p.getMass();
         double yAccel = totalYForce/p.getMass();
         Vector2D accel = new Vector2D(xAccel, yAccel);
+<<<<<<< HEAD
         //if(ind%2 == 1)
         //{
           //  System.out.println("Xaccel: " + xAccel + " Yaccel: " + yAccel);
         //}
+=======
+        if(ind%2 == 1)
+        {
+            System.out.println("Xaccel: " + xAccel + " Yaccel: " + yAccel);
+        }
+>>>>>>> origin/master
         return accel;
     }
 }
