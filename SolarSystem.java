@@ -57,7 +57,7 @@ public class SolarSystem
                 //The planet can be on either side, force needs to be negative in some cases
                 double xDist = p.getCenter().x - p2.getCenter().x;
                 double yDist = p.getCenter().y - p2.getCenter().y;
-                double totalForce = (p.getMass() * p2.getMass())/(Math.hypot(xDist,yDist));
+                double totalForce = (p.getMass() * p2.getMass())/(Math.pow(Math.hypot(xDist,yDist),2));
                 //use atan here!!!
                 if(xDist > 0)
                 {
