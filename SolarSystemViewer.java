@@ -12,8 +12,7 @@ public class SolarSystemViewer
         while(true)
         {
             frame2.updateSystem();
-<<<<<<< HEAD
-            Thread.sleep(1000/30);
+            Thread.sleep(20);
             frame.repaint();
         }
     }

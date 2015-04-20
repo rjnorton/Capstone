@@ -1,10 +1,10 @@
 #BlueJ class context
-comment0.params=screenHeight\ screenWidth\ minVel\ maxVel\ move
-comment0.target=Planet(int,\ int,\ double,\ double,\ boolean)
+comment0.params=screenHeight\ screenWidth\ move
+comment0.target=Planet(int,\ int,\ boolean)
 comment1.params=
-comment1.target=int\ getMass()
+comment1.target=double\ getMass()
 comment2.params=newmass
-comment2.target=void\ setMass(int)
+comment2.target=void\ setMass(double)
 comment3.params=
 comment3.target=int\ getRadius()
 comment4.params=newradius

@@ -1,21 +1,31 @@
 import java.util.ArrayList;
+import java.math.BigInteger;
+import java.math.BigDecimal;
 
 public class SolarSystem
 {
     private ArrayList<Planet> system;
-    //use G and actual planet masses for more realistic motion?
-    public SolarSystem(int numPlanets, int screenWidth, int screenHeight)
+    private final double G = 6.67384E-11;
+    private double PIXELS_TO_METERS;
+    private double METERS_TO_PIXELS;
+    private double deltaTime;
+    
+    public SolarSystem(int numPlanets, int screenWidth, int screenHeight, double dT)
     {
+        double distanceToPluto = 5.9064E12;
+        deltaTime = dT;
+        PIXELS_TO_METERS = distanceToPluto/screenWidth; //Distance to pluto divided by width of screen
+        METERS_TO_PIXELS = 1/PIXELS_TO_METERS;
         system = new ArrayList<Planet>();
-        Planet sun = new Planet(screenHeight, screenWidth, 0, 0, false); //the sun
+        Planet sun = new Planet(screenHeight, screenWidth, false); //the sun
         sun.setCenter(new Vector2D(screenWidth/2,screenHeight/2));
-        sun.setMass(400);
+        sun.setMass(1.989E30);
         system.add(sun);
         
         for(int i = 0; i < numPlanets; i++)
         {
             //add private final constant for min and max velocities
-            system.add(new Planet(screenHeight, screenWidth, 1, 2, true));
+            system.add(new Planet(screenHeight, screenWidth, true));
         }
     }
     
@@ -30,11 +40,15 @@ public class SolarSystem
         {
             Planet p = system.get(i);
             Vector2D acceleration = getAccel(p, i);
+            acceleration.x *= deltaTime;
+            acceleration.y *= deltaTime;
             Vector2D currVel= p.getVelocity();
             Vector2D newVel = new Vector2D(currVel.x + acceleration.x, currVel.y + acceleration.y);
             p.setVelocity(newVel);
             Vector2D oldCenter = p.getCenter();
-            Vector2D newCenter = new Vector2D(oldCenter.x + newVel.x, oldCenter.y + newVel.y);
+            double newX = oldCenter.x + (newVel.x * deltaTime * METERS_TO_PIXELS);
+            double newY = oldCenter.y + (newVel.y * deltaTime * METERS_TO_PIXELS);
+            Vector2D newCenter = new Vector2D(newX, newY);
             p.setCenter(newCenter);
             //if(i%2 == 1)
             //{
@@ -54,10 +68,10 @@ public class SolarSystem
             if(!(i == ind))
             {
                 Planet p2 = system.get(i);
-                //The planet can be on either side, force needs to be negative in some cases
-                double xDist = p.getCenter().x - p2.getCenter().x;
-                double yDist = p.getCenter().y - p2.getCenter().y;
-                double totalForce = (p.getMass() * p2.getMass())/(Math.pow(Math.hypot(xDist,yDist),2));
+                double xDist = (p.getCenter().x - p2.getCenter().x) * PIXELS_TO_METERS;
+                double yDist = (p.getCenter().y - p2.getCenter().y) * PIXELS_TO_METERS;
+                double totalDist = Math.hypot(xDist,yDist);
+                double totalForce = (G * p.getMass() * p2.getMass())/(Math.pow(totalDist,2));
                 double angle = Math.atan2(yDist, xDist);
                 double xForce = totalForce * Math.cos(angle);
                 double yForce = totalForce * Math.sin(angle);
@@ -71,7 +85,7 @@ public class SolarSystem
         Vector2D accel = new Vector2D(xAccel, yAccel);
         //if(ind%2 == 1)
         //{
-          //  System.out.println("Xaccel: " + xAccel + " Yaccel: " + yAccel);
+           //System.out.println("XAccel: " + xAccel + " YAccel: " + yAccel);
         //}
         return accel;
     }
