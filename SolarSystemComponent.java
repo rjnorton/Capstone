@@ -11,7 +11,7 @@ public class SolarSystemComponent extends JComponent
     
     public SolarSystemComponent(int frameWidth, int frameHeight)
     {
-        system = new SolarSystem(20, frameWidth, frameHeight, 86400);
+        system = new SolarSystem(200, frameWidth, frameHeight, 1);
     }
     
     public void paintComponent(Graphics g)

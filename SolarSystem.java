@@ -1,31 +1,18 @@
 import java.util.ArrayList;
-import java.math.BigInteger;
-import java.math.BigDecimal;
 
 public class SolarSystem
 {
     private ArrayList<Planet> system;
-    private final double G = 6.67384E-11;
-    private double PIXELS_TO_METERS;
-    private double METERS_TO_PIXELS;
     private double deltaTime;
-    
+    private final double G = .01;
     public SolarSystem(int numPlanets, int screenWidth, int screenHeight, double dT)
     {
-        double distanceToPluto = 5.9064E12;
         deltaTime = dT;
-        PIXELS_TO_METERS = distanceToPluto/screenWidth; //Distance to pluto divided by width of screen
-        METERS_TO_PIXELS = 1/PIXELS_TO_METERS;
-        system = new ArrayList<Planet>();
-        Planet sun = new Planet(screenHeight, screenWidth, false); //the sun
-        sun.setCenter(new Vector2D(screenWidth/2,screenHeight/2));
-        sun.setMass(1.989E30);
-        system.add(sun);
-        
+        system = new ArrayList<Planet>();        
         for(int i = 0; i < numPlanets; i++)
         {
             //add private final constant for min and max velocities
-            system.add(new Planet(screenHeight, screenWidth, true));
+            system.add(new Planet(screenHeight, screenWidth));
         }
     }
     
@@ -46,10 +33,44 @@ public class SolarSystem
             Vector2D newVel = new Vector2D(currVel.x + acceleration.x, currVel.y + acceleration.y);
             p.setVelocity(newVel);
             Vector2D oldCenter = p.getCenter();
-            double newX = oldCenter.x + (newVel.x * deltaTime * METERS_TO_PIXELS);
-            double newY = oldCenter.y + (newVel.y * deltaTime * METERS_TO_PIXELS);
+            double newX = oldCenter.x + (newVel.x * deltaTime);
+            double newY = oldCenter.y + (newVel.y * deltaTime);
             Vector2D newCenter = new Vector2D(newX, newY);
             p.setCenter(newCenter);
+            
+            for(int j = 0; j < system.size(); j++)
+            {
+                if(j != i)
+                {
+                    Planet o = system.get(j);
+                    if(p.collisions(o))
+                    {
+                        double initialMomentumX = (p.getMass() * p.getVelocity().x) + (o.getMass() * o.getVelocity().x);
+                        double initialMomentumY = (p.getMass() * p.getVelocity().y) + (o.getMass() * o.getVelocity().y);
+                        if(p.getMass() > o.getMass())
+                        {
+                            p.setMass(p.getMass() + o.getMass());
+                            double newXVel = initialMomentumX/p.getMass();
+                            double newYVel = initialMomentumY/p.getMass();
+                            Vector2D v = new Vector2D(newXVel, newYVel);
+                            p.setVelocity(v);
+                            system.remove(o);
+                            p.resize();
+                        }
+                        else
+                        {
+                            o.setMass(p.getMass() + o.getMass());
+                            double newXVel = initialMomentumX/o.getMass();
+                            double newYVel = initialMomentumY/o.getMass();
+                            Vector2D v = new Vector2D(newXVel, newYVel);
+                            o.setVelocity(v);
+                            system.remove(p);
+                            o.resize();
+                            break;
+                        }
+                    }
+                }
+            }
             //if(i%2 == 1)
             //{
             //    System.out.println("X: " + newVel.x + " Y: " + newVel.y);
@@ -68,8 +89,8 @@ public class SolarSystem
             if(!(i == ind))
             {
                 Planet p2 = system.get(i);
-                double xDist = (p.getCenter().x - p2.getCenter().x) * PIXELS_TO_METERS;
-                double yDist = (p.getCenter().y - p2.getCenter().y) * PIXELS_TO_METERS;
+                double xDist = p.getCenter().x - p2.getCenter().x;
+                double yDist = p.getCenter().y - p2.getCenter().y;
                 double totalDist = Math.hypot(xDist,yDist);
                 double totalForce = (G * p.getMass() * p2.getMass())/(Math.pow(totalDist,2));
                 double angle = Math.atan2(yDist, xDist);
