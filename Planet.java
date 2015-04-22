@@ -10,7 +10,7 @@ public class Planet
     
     public Planet(int screenHeight, int screenWidth)
     {
-        mass = (int) (Math.random() * 3) + 1;
+        mass = (Math.random() * .025) + .05;
         radius = getRadius();
         
         int startX = (int) (Math.random() * (screenWidth - 30));
@@ -28,14 +28,14 @@ public class Planet
     
     public int getRadius()
     {
-        int radius = 2 + ((int) (mass/10));
+        radius = 2 + ((int) (Math.sqrt(mass)/2));
         return radius;
     }
     
     public void resize()
     {
         Vector2D center = getCenter();
-        planet = new Ellipse2D.Double(center.x, center.y, getRadius() * 2, getRadius() * 2);
+        planet = new Ellipse2D.Double(center.x - getRadius(), center.y - getRadius(), getRadius() * 2, getRadius() * 2);
     }
     
     public void setMass(double newmass)

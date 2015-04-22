@@ -11,18 +11,35 @@ public class SolarSystemComponent extends JComponent
     
     public SolarSystemComponent(int frameWidth, int frameHeight)
     {
-        system = new SolarSystem(200, frameWidth, frameHeight, 1);
+        system = new SolarSystem(500, frameWidth, frameHeight, 10);
     }
     
     public void paintComponent(Graphics g)
     {
         ArrayList<Planet> planets = system.getPlanets();
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.GREEN); //(Mass / 100)%26 or something to get color 
         for(int i = 0; i < planets.size(); i++)
         {
-            g2.draw(planets.get(i).getCircle());
-            g2.fill(planets.get(i).getCircle());
+            Planet p = planets.get(i);
+            int red = 70 + (int)(p.getMass() * 2);
+            int green = 120 + (int)(p.getMass() * 3);
+            int blue = 200 - (int)(p.getMass() * 4);
+            if(blue < 0)
+            {
+                blue = 0;
+            }
+            if(red > 255)
+            {
+                red = 255;
+            }
+            if(green > 255)
+            {
+                green = 255;
+            }
+            Color c = new Color(red,green,blue);
+            g2.setColor(c); 
+            g2.draw(p.getCircle());
+            g2.fill(p.getCircle());
         }
     }
     

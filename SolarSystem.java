@@ -27,16 +27,19 @@ public class SolarSystem
         {
             Planet p = system.get(i);
             Vector2D acceleration = getAccel(p, i);
-            acceleration.x *= deltaTime;
-            acceleration.y *= deltaTime;
-            Vector2D currVel= p.getVelocity();
-            Vector2D newVel = new Vector2D(currVel.x + acceleration.x, currVel.y + acceleration.y);
-            p.setVelocity(newVel);
-            Vector2D oldCenter = p.getCenter();
-            double newX = oldCenter.x + (newVel.x * deltaTime);
-            double newY = oldCenter.y + (newVel.y * deltaTime);
-            Vector2D newCenter = new Vector2D(newX, newY);
-            p.setCenter(newCenter);
+            if(acceleration != null)
+            {
+                acceleration.x *= deltaTime;
+                acceleration.y *= deltaTime;
+                Vector2D currVel= p.getVelocity();
+                Vector2D newVel = new Vector2D(currVel.x + acceleration.x, currVel.y + acceleration.y);
+                p.setVelocity(newVel);
+                Vector2D oldCenter = p.getCenter();
+                double newX = oldCenter.x + (newVel.x * deltaTime);
+                double newY = oldCenter.y + (newVel.y * deltaTime);
+                Vector2D newCenter = new Vector2D(newX, newY);
+                p.setCenter(newCenter);
+            }
             //if(i%2 == 1)
             //{
             //    System.out.println("X: " + newVel.x + " Y: " + newVel.y);
@@ -63,16 +66,30 @@ public class SolarSystem
                 {
                     double momentumX = (p.getMass() * p.getVelocity().x) + (p2.getMass() * p2.getVelocity().x);
                     double momentumY = (p.getMass() * p.getVelocity().y) + (p2.getMass() * p2.getVelocity().y);
-                    p.setMass(p.getMass() + p2.getMass());
-                    double newXVel = momentumX/p.getMass();
-                    double newYVel = momentumY/p.getMass();
-                    Vector2D v = new Vector2D(newXVel, newYVel);
-                    p.setVelocity(v);
-                    system.remove(p2);
-                    p.resize();
-                    if(ind > i)
+                    if(p.getMass() > p2.getMass())
                     {
-                        ind--;
+                        p.setMass(p.getMass() + p2.getMass());
+                        double newXVel = momentumX/p.getMass();
+                        double newYVel = momentumY/p.getMass();
+                        Vector2D v = new Vector2D(newXVel, newYVel);
+                        p.setVelocity(v);
+                        system.remove(p2);
+                        p.resize();
+                        if(ind > i)
+                        {
+                            ind--;
+                        }
+                    }
+                    else
+                    {
+                        p2.setMass(p.getMass() + p2.getMass());
+                        double newXVel = momentumX/p2.getMass();
+                        double newYVel = momentumY/p2.getMass();
+                        Vector2D v = new Vector2D(newXVel, newYVel);
+                        p2.setVelocity(v);
+                        system.remove(p);
+                        p2.resize();
+                        return null;
                     }
                 }
                 
