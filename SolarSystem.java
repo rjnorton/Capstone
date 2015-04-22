@@ -37,40 +37,6 @@ public class SolarSystem
             double newY = oldCenter.y + (newVel.y * deltaTime);
             Vector2D newCenter = new Vector2D(newX, newY);
             p.setCenter(newCenter);
-            
-            for(int j = 0; j < system.size(); j++)
-            {
-                if(j != i)
-                {
-                    Planet o = system.get(j);
-                    if(p.collisions(o))
-                    {
-                        double initialMomentumX = (p.getMass() * p.getVelocity().x) + (o.getMass() * o.getVelocity().x);
-                        double initialMomentumY = (p.getMass() * p.getVelocity().y) + (o.getMass() * o.getVelocity().y);
-                        if(p.getMass() > o.getMass())
-                        {
-                            p.setMass(p.getMass() + o.getMass());
-                            double newXVel = initialMomentumX/p.getMass();
-                            double newYVel = initialMomentumY/p.getMass();
-                            Vector2D v = new Vector2D(newXVel, newYVel);
-                            p.setVelocity(v);
-                            system.remove(o);
-                            p.resize();
-                        }
-                        else
-                        {
-                            o.setMass(p.getMass() + o.getMass());
-                            double newXVel = initialMomentumX/o.getMass();
-                            double newYVel = initialMomentumY/o.getMass();
-                            Vector2D v = new Vector2D(newXVel, newYVel);
-                            o.setVelocity(v);
-                            system.remove(p);
-                            o.resize();
-                            break;
-                        }
-                    }
-                }
-            }
             //if(i%2 == 1)
             //{
             //    System.out.println("X: " + newVel.x + " Y: " + newVel.y);
@@ -89,15 +55,36 @@ public class SolarSystem
             if(!(i == ind))
             {
                 Planet p2 = system.get(i);
-                double xDist = p.getCenter().x - p2.getCenter().x;
-                double yDist = p.getCenter().y - p2.getCenter().y;
+                double xDist = (p.getCenter().x - p2.getCenter().x) * 2;
+                double yDist = (p.getCenter().y - p2.getCenter().y) * 2;
                 double totalDist = Math.hypot(xDist,yDist);
-                double totalForce = (G * p.getMass() * p2.getMass())/(Math.pow(totalDist,2));
-                double angle = Math.atan2(yDist, xDist);
-                double xForce = totalForce * Math.cos(angle);
-                double yForce = totalForce * Math.sin(angle);
-                totalXForce -= xForce;
-                totalYForce -= yForce;
+                
+                if(totalDist < p.getRadius() + p2.getRadius())
+                {
+                    double momentumX = (p.getMass() * p.getVelocity().x) + (p2.getMass() * p2.getVelocity().x);
+                    double momentumY = (p.getMass() * p.getVelocity().y) + (p2.getMass() * p2.getVelocity().y);
+                    p.setMass(p.getMass() + p2.getMass());
+                    double newXVel = momentumX/p.getMass();
+                    double newYVel = momentumY/p.getMass();
+                    Vector2D v = new Vector2D(newXVel, newYVel);
+                    p.setVelocity(v);
+                    system.remove(p2);
+                    p.resize();
+                    if(ind > i)
+                    {
+                        ind--;
+                    }
+                }
+                
+                else
+                {    
+                    double totalForce = (G * p.getMass() * p2.getMass())/(Math.pow(totalDist,2));
+                    double angle = Math.atan2(yDist, xDist);
+                    double xForce = totalForce * Math.cos(angle);
+                    double yForce = totalForce * Math.sin(angle);
+                    totalXForce -= xForce;
+                    totalYForce -= yForce;
+                }
             }
         }
         

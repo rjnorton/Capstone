@@ -10,7 +10,7 @@ public class Planet
     
     public Planet(int screenHeight, int screenWidth)
     {
-        mass = 5;
+        mass = (int) (Math.random() * 3) + 1;
         radius = getRadius();
         
         int startX = (int) (Math.random() * (screenWidth - 30));
@@ -36,17 +36,6 @@ public class Planet
     {
         Vector2D center = getCenter();
         planet = new Ellipse2D.Double(center.x, center.y, getRadius() * 2, getRadius() * 2);
-    }
-    
-    public boolean collisions(Planet other)
-    {
-        Rectangle2D thisRect = planet.getBounds2D();
-        Rectangle2D otherRect = other.getCircle().getBounds2D();
-        if(thisRect.intersects(otherRect.getX(), otherRect.getY(), otherRect.getWidth(), otherRect.getHeight()))
-        {
-            return true;
-        }
-        return false;
     }
     
     public void setMass(double newmass)
