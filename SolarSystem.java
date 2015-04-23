@@ -8,7 +8,12 @@ public class SolarSystem
     public SolarSystem(int numPlanets, int screenWidth, int screenHeight, double dT)
     {
         deltaTime = dT;
-        system = new ArrayList<Planet>();        
+        system = new ArrayList<Planet>();    
+        Planet p = new Planet(screenHeight, screenWidth);
+        p.setVelocity(new Vector2D(0,0));
+        p.setMass(300);
+        p.setCenter(new Vector2D(screenWidth/2, screenHeight/2));
+        system.add(p);
         for(int i = 0; i < numPlanets; i++)
         {
             //add private final constant for min and max velocities
@@ -113,5 +118,10 @@ public class SolarSystem
            //System.out.println("XAccel: " + xAccel + " YAccel: " + yAccel);
         //}
         return accel;
+    }
+    
+    public void addPlanet(Planet p)
+    {
+        system.add(p);
     }
 }

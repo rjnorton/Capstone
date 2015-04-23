@@ -27,7 +27,8 @@ public class Planet
         {
             ratioY = -1 * ratioY;
         }
-        velocity = new Vector2D(((Math.random() * .04) + .01) * ratioX, ((Math.random() * .04) + .01) * ratioY);
+       velocity = new Vector2D(((Math.random() * .06) + .02) * ratioX, ((Math.random() * .04) + .01) * ratioY);
+       //velocity = new Vector2D(1/(startX - screenWidth/2), 1/(startY - screenHeight/2));
         planet = new Ellipse2D.Double(startX, startY, radius*2, radius*2);
     }
     

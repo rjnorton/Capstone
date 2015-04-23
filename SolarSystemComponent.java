@@ -8,15 +8,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Scanner;
 
 public class SolarSystemComponent extends JComponent
 {
     private SolarSystem system;
     private boolean up,left,down,right,add;
-    priavte int counter;
+    private int width, height;
+    private MousePressListener mListener;
     public SolarSystemComponent(int frameWidth, int frameHeight)
     {
         system = new SolarSystem(1000, frameWidth, frameHeight, 10);
+        width = frameWidth;
+        height = frameHeight;
         up = false;
         right = false;
         down = false;
@@ -24,16 +28,32 @@ public class SolarSystemComponent extends JComponent
         add = false;
         KeyEventListener key = new KeyEventListener();
         addKeyListener(key);
-        MousePressListener mListener = new MousePressListener();
+        mListener = new MousePressListener();
         addMouseListener(mListener);
         setFocusable(true);
-        counter = 0;
     }
     
     public void paintComponent(Graphics g)
     {
         ArrayList<Planet> planets = system.getPlanets();
         Graphics2D g2 = (Graphics2D) g;
+        if(add)
+        {
+            Planet p2 = new Planet(width, height);
+            Scanner s = new Scanner(System.in);
+            System.out.println("Enter mass: ");
+            double mass = s.nextDouble();
+            System.out.println("Enter x velocity: ");
+            double xVel = s.nextDouble();
+            System.out.println("Enter y velocity: ");
+            double yVel = s.nextDouble();
+            p2.setMass(mass);
+            p2.setVelocity(new Vector2D(xVel,yVel));
+            p2.setCenter(new Vector2D(mListener.getX(), mListener.getY()));
+            system.addPlanet(p2);
+            add = false;
+        }
+        
         for(int i = 0; i < planets.size(); i++)
         {
             Planet p = planets.get(i);
@@ -62,14 +82,6 @@ public class SolarSystemComponent extends JComponent
                 p.setCenter(center);
             }
             
-            if(add)
-            {
-                counter++;
-            }
-            else
-            {
-                counter = 0;
-            }
             int red = 70 + (int)(p.getMass() * 2);
             int green = 120 + (int)(p.getMass() * 3);
             int blue = 200 - (int)(p.getMass() * 4);
@@ -85,7 +97,7 @@ public class SolarSystemComponent extends JComponent
             {
                 green = 255;
             }
-            if(p.getMass() > 700)
+            if(p.getMass() > 1000)
             {
                 red = 0;
                 green = 0;
@@ -168,18 +180,32 @@ public class SolarSystemComponent extends JComponent
     
     public class MousePressListener extends MouseAdapter
     {
+        private int x;
+        private int y;
         public MousePressListener()
         {
+            x = 0;
+            y = 0;
         }
         
         public void mousePressed(MouseEvent e)
         {
-            add = true;
+            if(e.getButton() == MouseEvent.BUTTON3)
+            {
+                add = true;
+                x = e.getX();
+                y = e.getY();
+            }
         }
         
-        public void mouseReleased(MouseEvent e)
+        public int getX()
         {
-            add = false;
+            return x;
+        }
+        
+        public int getY()
+        {
+            return y;
         }
     }
 }

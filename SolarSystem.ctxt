@@ -7,4 +7,6 @@ comment2.params=
 comment2.target=void\ updateSystem()
 comment3.params=p\ ind
 comment3.target=Vector2D\ getAccel(Planet,\ int)
-numComments=4
+comment4.params=p
+comment4.target=void\ addPlanet(Planet)
+numComments=5
