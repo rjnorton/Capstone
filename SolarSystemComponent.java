@@ -6,20 +6,25 @@ import java.awt.geom.Ellipse2D;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SolarSystemComponent extends JComponent
 {
     private SolarSystem system;
-    private boolean up,left,down,right;
+    private boolean up,left,down,right,add;
     public SolarSystemComponent(int frameWidth, int frameHeight)
     {
-        system = new SolarSystem(1, frameWidth, frameHeight, 10);
+        system = new SolarSystem(1000, frameWidth, frameHeight, 10);
         up = false;
         right = false;
         down = false;
         left = false;
+        add = false;
         KeyEventListener key = new KeyEventListener();
         addKeyListener(key);
+        MousePressListener mListener = new MousePressListener();
+        addMouseListener(mListener);
         setFocusable(true);
     }
     
@@ -31,28 +36,27 @@ public class SolarSystemComponent extends JComponent
         {
             Planet p = planets.get(i);
             Vector2D center = p.getCenter();
-            System.out.println(left);
             if(left)
             {
-                center.setX(center.x + 10);
+                center.setX(center.x + 5);
                 p.setCenter(center);
             }
-            
+                
             if(down)
             {
-                center.setY(center.y + 10);
+                center.setY(center.y - 5);
                 p.setCenter(center);
             }
             
             if(up)
             {
-                center.setY(center.y - 10);
+                center.setY(center.y + 5);
                 p.setCenter(center);
             }
-            
+                
             if(right)
             {
-                center.setX(center.x - 10);
+                center.setX(center.x - 5);
                 p.setCenter(center);
             }
             
@@ -71,7 +75,7 @@ public class SolarSystemComponent extends JComponent
             {
                 green = 255;
             }
-            if(blue == 0 && red == 255 && green == 255)
+            if(p.getMass() > 700)
             {
                 red = 0;
                 green = 0;
@@ -80,7 +84,8 @@ public class SolarSystemComponent extends JComponent
             g2.setColor(c); 
             g2.draw(p.getCircle());
             g2.fill(p.getCircle());
-        }
+         }
+        
     }
     
     public void updateSystem()
@@ -94,11 +99,10 @@ public class SolarSystemComponent extends JComponent
         {
         }
         
-        @Override
         public void keyPressed(KeyEvent event)
         {
             int e = event.getKeyCode();
-            System.out.println("wut");
+            
             if(e == KeyEvent.VK_LEFT)
             {
                 right = false;
@@ -126,10 +130,10 @@ public class SolarSystemComponent extends JComponent
             repaint();
         }
         
-        @Override
         public void keyReleased(KeyEvent event)
         {
             int e = event.getKeyCode();
+            
             if(e == KeyEvent.VK_LEFT)
             {
                 left = false;
@@ -149,6 +153,23 @@ public class SolarSystemComponent extends JComponent
             {
                 down = false;
             }
+        }
+    }
+    
+    public class MousePressListener extends MouseAdapter
+    {
+        public MousePressListener()
+        {
+        }
+        
+        public void mousePressed(MouseEvent e)
+        {
+            add = true;
+        }
+        
+        public void mouseReleased(MouseEvent e)
+        {
+            add = false;
         }
     }
 }

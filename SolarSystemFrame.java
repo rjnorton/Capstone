@@ -1,4 +1,6 @@
 import javax.swing.JFrame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class SolarSystemFrame extends JFrame
 {
@@ -9,11 +11,20 @@ public class SolarSystemFrame extends JFrame
     {       
         component = new SolarSystemComponent(FRAME_WIDTH, FRAME_HEIGHT);
         add(component);
+        addWindowListener(new FrameWindowListener());
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
     
     public void updateSystem()
     {
         component.updateSystem();
+    }
+    
+    class FrameWindowListener extends WindowAdapter
+    {
+        public void windowOpened(WindowEvent event)
+        {
+            component.requestFocusInWindow();
+        }
     }
 }
