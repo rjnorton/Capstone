@@ -12,4 +12,14 @@ public class Vector2D
     public Vector2D()
     {
     }
+    
+    public void setX(double x1)
+    {
+        x = x1;
+    }
+    
+    public void setY(double y1)
+    {
+        y = y1;
+    }
 }
