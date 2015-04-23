@@ -10,14 +10,24 @@ public class Planet
     
     public Planet(int screenHeight, int screenWidth)
     {
-        mass = (Math.random() * .025) + .05;
+        mass = (Math.random() * .5) +.5;
         radius = getRadius();
         
-        int startX = (int) (Math.random() * (screenWidth - 30));
-        int startY = (int) (Math.random() * (screenHeight - 30));
-        
-        velocity = new Vector2D(0,0);       
-        
+        double startX = (int) (Math.random() * (screenWidth - 30));
+        double startY = (int) (Math.random() * (screenHeight - 30));
+        double xDiff = ((screenWidth/2) - startX)/(screenWidth/2);
+        double yDiff = ((screenHeight/2) - startY)/(screenHeight/2);
+        double ratioX = 1 - Math.abs(xDiff);
+        double ratioY = 1 - Math.abs(yDiff);
+        if(yDiff < 0)
+        {
+            ratioX = -1 * ratioX;
+        }
+        if(xDiff > 0)
+        {
+            ratioY = -1 * ratioY;
+        }
+        velocity = new Vector2D(((Math.random() * .04) + .01) * ratioX, ((Math.random() * .04) + .01) * ratioY);
         planet = new Ellipse2D.Double(startX, startY, radius*2, radius*2);
     }
     
