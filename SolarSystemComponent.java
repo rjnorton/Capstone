@@ -16,6 +16,7 @@ public class SolarSystemComponent extends JComponent
     private boolean up,left,down,right,add;
     private int width, height;
     private MousePressListener mListener;
+    private double lastTime;
     public SolarSystemComponent(int frameWidth, int frameHeight)
     {
         system = new SolarSystem(1000, frameWidth, frameHeight, 10);
@@ -31,12 +32,14 @@ public class SolarSystemComponent extends JComponent
         mListener = new MousePressListener();
         addMouseListener(mListener);
         setFocusable(true);
+        lastTime = 0;
     }
     
     public void paintComponent(Graphics g)
     {
         ArrayList<Planet> planets = system.getPlanets();
         Graphics2D g2 = (Graphics2D) g;
+        double highestMass = 0;
         if(add)
         {
             Planet p2 = new Planet(width, height);
@@ -82,9 +85,9 @@ public class SolarSystemComponent extends JComponent
                 p.setCenter(center);
             }
             
-            int red = 70 + (int)(p.getMass() * 2);
-            int green = 120 + (int)(p.getMass() * 3);
-            int blue = 200 - (int)(p.getMass() * 4);
+            int red = 70 + (int)(p.getMass() * 1.5);
+            int green = 100 + (int)(p.getMass() * 2);
+            int blue = 200 - (int)(p.getMass() * 3);
             if(blue < 0)
             {
                 blue = 0;
@@ -102,12 +105,22 @@ public class SolarSystemComponent extends JComponent
                 red = 0;
                 green = 0;
             }
+            if(p.getMass() > highestMass)
+            {
+                highestMass = p.getMass();
+            }
             Color c = new Color(red,green,blue);
+            g2.setColor(Color.BLACK);
+            g2.drawString("Number of bodies: " + planets.size(), 30, 30);
             g2.setColor(c); 
             g2.draw(p.getCircle());
             g2.fill(p.getCircle());
          }
-        
+        g2.setColor(Color.BLACK);
+        g2.drawString("Highest Mass: " + highestMass, 30, 50);
+        double fps =  (100000000.0 / (System.nanoTime() - lastTime));
+        lastTime = System.nanoTime();
+        g2.drawString("FPS: " + fps, 30, 70);
     }
     
     public void updateSystem()

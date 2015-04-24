@@ -11,9 +11,9 @@ public class SolarSystem
         system = new ArrayList<Planet>();    
         Planet p = new Planet(screenHeight, screenWidth);
         p.setVelocity(new Vector2D(0,0));
-        p.setMass(300);
+        p.setMass(50);
         p.setCenter(new Vector2D(screenWidth/2, screenHeight/2));
-        system.add(p);
+        //system.add(p);
         for(int i = 0; i < numPlanets; i++)
         {
             //add private final constant for min and max velocities
