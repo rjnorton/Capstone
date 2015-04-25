@@ -1,8 +1,13 @@
 #BlueJ class context
 comment0.params=frameWidth\ frameHeight
 comment0.target=SolarSystemComponent(int,\ int)
-comment1.params=g
-comment1.target=void\ paintComponent(java.awt.Graphics)
-comment2.params=
-comment2.target=void\ updateSystem()
-numComments=3
+comment0.text=\r\n\ Constructor\ for\ SolarSystemComponent,\ initializes\ variables\ for\ keyboard\ and\ mouse\ events\ and\ FPS\r\n\ and\ creates\ keyboard/mouse\ listeners\ from\ anonymous\ subclasses\ in\ this\ class\r\n\r\n\ @param\ \ frameWidth\ The\ width\ of\ the\ frame\r\n\ @param\ \ frameHeight\ The\ height\ of\ the\ frame\r\n
+comment1.params=
+comment1.target=void\ run()
+comment2.params=g
+comment2.target=void\ paintComponent(java.awt.Graphics)
+comment2.text=\r\n\ Renders\ all\ of\ the\ bodies\ in\ the\ simulation,\ and\ prints\ FPS,\ highest\ mass,\ and\ number\ of\ bodies\ left\ \r\n\ int\ the\ simulation\r\n\r\n\ @param\ \ g\ The\ graphics\ object\ used\ in\ the\ rendering\r\n
+comment3.params=
+comment3.target=void\ updateSystem()
+comment3.text=\r\n\ Used\ in\ the\ main\ loop\ of\ the\ simulation,\ this\ updates\ the\ position\ of\ every\ body\ in\ the\ simiulaton\r\n\r\n
+numComments=4

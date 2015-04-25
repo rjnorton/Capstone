@@ -1,10 +1,28 @@
 import java.util.ArrayList;
 
+/**
+ * The Solar System itself, it holds all the planets and calculates force to
+ * determine the new velocity and position of each planet
+ * 
+ * @author Rob Norton
+ * @version 4/24/15
+ * @see Planet
+ * @see Vector2D
+ */
 public class SolarSystem
 {
     private ArrayList<Planet> system;
     private double deltaTime;
     private final double G = .01;
+    
+    /**
+     * Constructor for SolarSystem, initializes an ArrayList with a specified number of planets
+     *
+     * @param  numPlanets The number of planets to be created
+     * @param  screenWidth The width of the frame
+     * @param  screenHeight The height of the frame
+     * @param  dT The time step for the simulation
+     */
     public SolarSystem(int numPlanets, int screenWidth, int screenHeight, double dT)
     {
         deltaTime = dT;
@@ -21,11 +39,19 @@ public class SolarSystem
         }
     }
     
+    /**
+     * Returns the ArrayList of the planets
+     *
+     * @return The ArrayList of planets contained within this SolarSystem object
+     */
     public ArrayList<Planet> getPlanets()
     {
         return system;
     }
     
+    /**
+     * Updates the velocity and position of every body in this SolarSystem with Euler integration
+     */
     public void updateSystem()
     {
         for(int i = 0; i < system.size(); i++)
@@ -45,16 +71,22 @@ public class SolarSystem
                 Vector2D newCenter = new Vector2D(newX, newY);
                 p.setCenter(newCenter);
             }
-            //if(i%2 == 1)
-            //{
-            //    System.out.println("X: " + newVel.x + " Y: " + newVel.y);
-            //}
         }
     }
     
+    /**
+     * Calculates the acceleration of a planet by using the law of
+     * universal gravitation on every other planet in the solar system.
+     * It also checks if two planets are close enough to collide, and if they are
+     * then an elastic collision occurs.
+     *
+     * @param  p The planet to calculate the acceleration of
+     * @param  ind Where Planet p is in the list of planets, so that  it won't calculate the force on itself
+     * @return The acceleration represented in Vector2D form
+     * @see Vector2D
+     */
     public Vector2D getAccel(Planet p, int ind)
     {
-        //Calculate force as a whole, then break up into x and y vectors using trig
         double totalXForce = 0;
         double totalYForce = 0;
         
@@ -113,13 +145,15 @@ public class SolarSystem
         double xAccel = totalXForce/p.getMass();
         double yAccel = totalYForce/p.getMass();
         Vector2D accel = new Vector2D(xAccel, yAccel);
-        //if(ind%2 == 1)
-        //{
-           //System.out.println("XAccel: " + xAccel + " YAccel: " + yAccel);
-        //}
         return accel;
     }
     
+    /**
+     * Adds a planet to the solar system
+     *
+     * @param  p The planet to be added
+     * 
+     */
     public void addPlanet(Planet p)
     {
         system.add(p);

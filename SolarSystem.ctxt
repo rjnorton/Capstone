@@ -1,12 +1,17 @@
 #BlueJ class context
 comment0.params=numPlanets\ screenWidth\ screenHeight\ dT
 comment0.target=SolarSystem(int,\ int,\ int,\ double)
+comment0.text=\r\n\ Constructor\ for\ SolarSystem,\ initializes\ an\ ArrayList\ with\ a\ specified\ number\ of\ planets\r\n\r\n\ @param\ \ numPlanets\ The\ number\ of\ planets\ to\ be\ created\r\n\ @param\ \ screenWidth\ The\ width\ of\ the\ frame\r\n\ @param\ \ screenHeight\ The\ height\ of\ the\ frame\r\n\ @param\ \ dT\ The\ time\ step\ for\ the\ simulation\r\n
 comment1.params=
 comment1.target=java.util.ArrayList\ getPlanets()
+comment1.text=\r\n\ Returns\ the\ ArrayList\ of\ the\ planets\r\n\r\n\ @return\ The\ ArrayList\ of\ planets\ contained\ within\ this\ SolarSystem\ object\r\n
 comment2.params=
 comment2.target=void\ updateSystem()
+comment2.text=\r\n\ Updates\ the\ velocity\ and\ position\ of\ every\ body\ in\ this\ SolarSystem\ with\ Euler\ integration\r\n
 comment3.params=p\ ind
 comment3.target=Vector2D\ getAccel(Planet,\ int)
+comment3.text=\r\n\ Calculates\ the\ acceleration\ of\ a\ planet\ by\ using\ the\ law\ of\r\n\ universal\ gravitation\ on\ every\ other\ planet\ in\ the\ solar\ system.\r\n\ It\ also\ checks\ if\ two\ planets\ are\ close\ enough\ to\ collide,\ and\ if\ they\ are\r\n\ then\ an\ elastic\ collision\ occurs.\r\n\r\n\ @param\ \ p\ The\ planet\ to\ calculate\ the\ acceleration\ of\r\n\ @param\ \ ind\ Where\ Planet\ p\ is\ in\ the\ list\ of\ planets,\ so\ that\ \ it\ won't\ calculate\ the\ force\ on\ itself\r\n\ @return\ The\ acceleration\ represented\ in\ Vector2D\ form\r\n\ @see\ Vector2D\r\n
 comment4.params=p
 comment4.target=void\ addPlanet(Planet)
+comment4.text=\r\n\ Adds\ a\ planet\ to\ the\ solar\ system\r\n\r\n\ @param\ \ p\ The\ planet\ to\ be\ added\r\n\ \r\n
 numComments=5

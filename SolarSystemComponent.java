@@ -9,17 +9,36 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Scanner;
+import java.util.TimerTask;
+import java.util.Timer;
 
+/**
+ * The component for the simulation, handles graphics and keyboard/mouse events
+ * 
+ * @author Rob Norton
+ * @version 4/24/15
+ * @see SolarSystem
+ */
 public class SolarSystemComponent extends JComponent
 {
     private SolarSystem system;
     private boolean up,left,down,right,add;
     private int width, height;
     private MousePressListener mListener;
-    private double lastTime;
+    private int totalFrameCount = 0;
+    private int FPS = 0;
+    private final int NUM_PLANETS = 1000;
+    
+    /**
+     * Constructor for SolarSystemComponent, initializes variables for keyboard and mouse events and FPS
+     * and creates keyboard/mouse listeners from anonymous subclasses in this class
+     *
+     * @param  frameWidth The width of the frame
+     * @param  frameHeight The height of the frame
+     */
     public SolarSystemComponent(int frameWidth, int frameHeight)
     {
-        system = new SolarSystem(1000, frameWidth, frameHeight, 10);
+        system = new SolarSystem(NUM_PLANETS, frameWidth, frameHeight, 10);
         width = frameWidth;
         height = frameHeight;
         up = false;
@@ -32,11 +51,28 @@ public class SolarSystemComponent extends JComponent
         mListener = new MousePressListener();
         addMouseListener(mListener);
         setFocusable(true);
-        lastTime = 0;
+        TimerTask updateFPS = new TimerTask()
+        {
+            public void run()
+            {
+                FPS = totalFrameCount;
+                totalFrameCount = 0;
+            }
+        };
+        
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(updateFPS, 1000, 1000);
     }
     
+    /**
+     * Renders all of the bodies in the simulation, and prints FPS, highest mass, and number of bodies left 
+     * int the simulation
+     *
+     * @param  g The graphics object used in the rendering
+     */
     public void paintComponent(Graphics g)
     {
+        totalFrameCount++;
         ArrayList<Planet> planets = system.getPlanets();
         Graphics2D g2 = (Graphics2D) g;
         double highestMass = 0;
@@ -117,12 +153,14 @@ public class SolarSystemComponent extends JComponent
             g2.fill(p.getCircle());
          }
         g2.setColor(Color.BLACK);
-        g2.drawString("Highest Mass: " + highestMass, 30, 50);
-        double fps =  (100000000.0 / (System.nanoTime() - lastTime));
-        lastTime = System.nanoTime();
-        g2.drawString("FPS: " + fps, 30, 70);
+        g2.drawString("Highest Mass: " + Math.floor(100 * highestMass)/100, 30, 50);
+        g2.drawString("FPS: " + FPS, 30, 70);
     }
     
+    /**
+     * Used in the main loop of the simulation, this updates the position of every body in the simiulaton
+     *
+     */
     public void updateSystem()
     {
         system.updateSystem();
@@ -209,6 +247,11 @@ public class SolarSystemComponent extends JComponent
                 x = e.getX();
                 y = e.getY();
             }
+        }
+        
+        public void mouseReleased(MouseEvent e)
+        {
+            add = false;
         }
         
         public int getX()

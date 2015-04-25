@@ -1,6 +1,8 @@
 #BlueJ class context
 comment0.params=
 comment0.target=SolarSystemFrame()
+comment0.text=\r\n\ Constructor\ for\ SolarSystemFrame,\ creates\ a\ SolarSystemComponent\ and\ a\ window\ listener\ to\ allow\r\n\ keyboard\ events\ to\ happen\ in\ the\ frame\r\n\r\n
 comment1.params=
 comment1.target=void\ updateSystem()
+comment1.text=\r\n\ Used\ in\ the\ main\ loop\ of\ the\ simulation,\ this\ updates\ the\ position\ of\ every\ body\ in\ the\ simiulaton\r\n\r\n
 numComments=2

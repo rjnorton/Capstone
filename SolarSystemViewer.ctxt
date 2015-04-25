@@ -1,4 +1,5 @@
 #BlueJ class context
 comment0.params=args
 comment0.target=void\ main(java.lang.String[])
+comment0.text=\r\n\ The\ main\ method\ for\ the\ simulation,\ creates\ a\ new\ frame\ then\ runs\ through\ the\ mainloop\r\n\ with\ a\ 10\ millisecond\ delay\r\n\r\n\ @param\ \ args\ The\ parameters\ passed\ into\ the\ method\ (useless)\r\n
 numComments=1
